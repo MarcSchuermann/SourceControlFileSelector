@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidSourceControlFileSelectorPackage">
+    <Groups>
+      <Group guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="icon" id="myIcon" />
+        <Strings>
+          <ButtonText>Invoke SourceControlFileSelectorCommand</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="icon" href="Resources\SourceControlFileSelectorCommand.bmp" usedList="myIcon" />
+    </Bitmaps>
+  </Commands>
+
+  <KeyBindings>
+    <KeyBinding guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" editor="guidVSStd97" mod1="Alt Shift" key1="y" />
+  </KeyBindings>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0xFFFF">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+    </CommandPlacement>
+  </CommandPlacements>
+
+  <Symbols>
+    <GuidSymbol name="guidSourceControlFileSelectorPackage" value="{eefd99c6-a96c-44b2-b5f4-08f7c202a83f}" />
+    <GuidSymbol name="guidSourceControlFileSelectorPackageCmdSet" value="{50ce47ea-ed9d-49b7-87f3-e31d9ee84f35}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="SourceControlFileSelectorCommandId" value="0x0100" />
+    </GuidSymbol>
+    <GuidSymbol name="icon" value="{90D4497B-9E2D-4B15-9B4B-4AEDDF51ABA9}">
+      <IDSymbol name="myIcon" value="1" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
