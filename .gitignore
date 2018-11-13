@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /VSIXProject1
 /SourceControlFileFinder
+/SolutionExplorerFileSelector
