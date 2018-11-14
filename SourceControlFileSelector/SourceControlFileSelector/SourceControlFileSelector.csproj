@@ -69,11 +69,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\SourceControlFileSelectorCommand.bmp">
+    <Content Include="Resources\SourceControlFileSelectorPackage.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\SourceControlFileSelectorPackage.ico">
+    <Content Include="Resources\SourceControlFileSelectorCommand.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

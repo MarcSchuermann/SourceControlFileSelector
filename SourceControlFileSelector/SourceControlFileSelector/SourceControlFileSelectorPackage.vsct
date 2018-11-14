@@ -22,7 +22,7 @@
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="icon" href="Resources\SourceControlFileSelectorCommand.bmp" usedList="myIcon" />
+      <Bitmap guid="icon" href="Resources\SourceControlFileSelectorCommand.png" usedList="myIcon" />
     </Bitmaps>
   </Commands>
 
