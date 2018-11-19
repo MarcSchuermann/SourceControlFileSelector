@@ -1,2 +1,2 @@
 # SourceControlFileSelector
-Icon made by Freepik from www.flaticon.com
+Icon made by Freepik/Icongeek26 from www.flaticon.com
