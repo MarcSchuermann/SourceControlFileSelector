@@ -16,13 +16,13 @@
         <Parent guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="icon" id="myIcon" />
         <Strings>
-          <ButtonText>Invoke SourceControlFileSelectorCommand</ButtonText>
+          <ButtonText>Select file in Source Control Explorer</ButtonText>
         </Strings>
       </Button>
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="icon" href="Resources\SourceControlFileSelectorCommand.png" usedList="myIcon" />
+      <Bitmap guid="icon" href="Resources\SourceControlFileSelectorPackage.ico" usedList="myIcon" />
     </Bitmaps>
   </Commands>
 
