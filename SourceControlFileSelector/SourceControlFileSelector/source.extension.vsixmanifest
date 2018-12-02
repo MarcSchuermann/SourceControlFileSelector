@@ -3,9 +3,9 @@
     <Metadata>
         <Identity Id="SourceControlFileSelector.6a82be6a-c909-45b6-89d6-3d6a41e9f419" Version="1.0" Language="en-US" Publisher="Marc Schuermann" />
         <DisplayName>SourceControlFileSelector</DisplayName>
-        <Description xml:space="preserve">Empty VSIX Project.</Description>
+        <Description xml:space="preserve">A visual studio extension to locate the current file in the team foundation source control explorer</Description>
         <Icon>SourceControlFileSelectorPackage.ico</Icon>
-        <PreviewImage>SourceControlFileSelectorCommand.png</PreviewImage>
+        <PreviewImage>SourceControlFileSelectorPackage.ico</PreviewImage>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0, 16.0)" />
