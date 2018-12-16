@@ -58,6 +58,7 @@
     <Compile Include="SourceControlFileSelectorCommand.cs" />
     <Compile Include="SourceControlFileSelectorPackage.cs" />
     <Compile Include="tfsAccess\TfsWrapper.cs" />
+    <Compile Include="TraceLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -73,6 +74,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\SourceControlFileSelectorPackage.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\SourceControlFileSelectorPackage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

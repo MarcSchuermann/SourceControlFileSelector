@@ -66,7 +66,14 @@ namespace SourceControlFileSelector.tfsAccess
 
         public dynamic GetVersionControlServer()
         {
-            return HatterasService.VersionControlServer;
+            try
+            {
+                return HatterasService?.VersionControlServer;
+            }
+            catch
+            {
+                return null;
+            }            
         }
 
         #endregion Public Methods

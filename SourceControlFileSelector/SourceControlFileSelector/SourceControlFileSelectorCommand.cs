@@ -66,11 +66,11 @@ namespace SourceControlFileSelector
         private static EnvDTE.DTE dte { get; set; }
 
         /// <summary>Gets the service provider from the owner package.</summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        private IAsyncServiceProvider ServiceProvider
         {
             get
             {
-                return this.package;
+                return package;
             }
         }
 
@@ -107,20 +107,41 @@ namespace SourceControlFileSelector
             ThreadHelper.ThrowIfNotOnUIThread();
 
             var selectedItem = GetFirstItem(dte?.SelectedItems);
+            var logger = new TraceLogger(dte);
+
             if (selectedItem != null)
             {
-                var localPath = GetLocalePath(selectedItem);
-                var tfs = new TfsWrapper();
+                logger.Log($"The selected item is '{selectedItem.Name}'.");
 
-                if (tfs != null)
+                var localPath = GetLocalePath(selectedItem);
+                logger.Log($"The locale path is '{localPath}'.");
+
+                var tfs = new TfsWrapper();
+                logger.Log($"The tfs is '{tfs}'.");
+
+                var versionControlServer = tfs.GetVersionControlServer();
+                if (versionControlServer != null)
                 {
-                    var versionControlServer = tfs.GetVersionControlServer();
+                    logger.Log($"The versionControlServer is '{versionControlServer}'.");
+
                     var workspace = versionControlServer.GetWorkspace(localPath);
+                    logger.Log($"The workspace is '{workspace}'.");
                     var serverPath = workspace.TryGetServerItemForLocalItem(localPath);
+                    logger.Log($"The serverPath is '{serverPath}'.");
 
                     var sourceControlExplorer = tfs.GetSourceControlExplorer();
                     tfs.SelectInSourceControlExplorer(serverPath, workspace);
                 }
+                else
+                {
+                    logger.Log($"The file {localPath} is not under source control.");
+                }
+
+                logger.Log($"End of selecting '{selectedItem.Name}'.");
+            }
+            else
+            {
+                logger.Log($"No file selected.");
             }
         }
 
