@@ -6,7 +6,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using System;
 
-namespace SourceControlFileSelector
+namespace SourceControlFileSelector.Misc
 {
     /// <summary>The Trace logger.</summary>
     public class TraceLogger

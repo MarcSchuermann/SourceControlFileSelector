@@ -2,6 +2,7 @@
 //// <copyright>Marc Schürmann</copyright>
 //// --------------------------------------------------------------------------------------------------------------------
 
+using SourceControlFileSelector.Misc;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -73,15 +74,29 @@ namespace SourceControlFileSelector.tfsAccess
             catch
             {
                 return null;
-            }            
+            }
         }
 
         #endregion Public Methods
 
         #region Internal Methods
 
-        internal void SelectInSourceControlExplorer(dynamic serverPath, dynamic workspace)
+        internal void SelectInSourceControlExplorer(dynamic serverPath, dynamic workspace, dynamic sourceControlExplorer)
         {
+            var poller = new DispatchedPoller(10, TimeSpan.FromSeconds(0.5), () =>
+            {
+                return !sourceControlExplorer.IsDisconnected;
+            },
+            () =>
+            {
+                SelectOneTimeInSourceControlExplorer(serverPath, workspace);
+            });
+            poller.Go();
+        }
+
+        internal void SelectOneTimeInSourceControlExplorer(dynamic serverPath, dynamic workspace)
+        {
+            wrapped.OpenSceToPath("$/", workspace);
             wrapped.OpenSceToPath(serverPath, workspace);
         }
 

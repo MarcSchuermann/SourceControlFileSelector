@@ -3,6 +3,7 @@
 //// --------------------------------------------------------------------------------------------------------------------
 
 using Microsoft.VisualStudio.Shell;
+using SourceControlFileSelector.Misc;
 using SourceControlFileSelector.tfsAccess;
 using System;
 using System.ComponentModel.Design;
@@ -132,7 +133,7 @@ namespace SourceControlFileSelector
                         logger.Log($"The serverPath is '{serverPath}'.");
 
                         var sourceControlExplorer = tfs.GetSourceControlExplorer();
-                        tfs.SelectInSourceControlExplorer(serverPath, workspace);
+                        tfs.SelectInSourceControlExplorer(serverPath, workspace, sourceControlExplorer);
                     }
                     else
                     {
