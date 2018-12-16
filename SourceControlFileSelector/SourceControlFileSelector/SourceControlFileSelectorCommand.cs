@@ -114,30 +114,37 @@ namespace SourceControlFileSelector
                 logger.Log($"The selected item is '{selectedItem.Name}'.");
 
                 var localPath = GetLocalePath(selectedItem);
-                logger.Log($"The locale path is '{localPath}'.");
-
-                var tfs = new TfsWrapper();
-                logger.Log($"The tfs is '{tfs}'.");
-
-                var versionControlServer = tfs.GetVersionControlServer();
-                if (versionControlServer != null)
+                if (!string.IsNullOrEmpty(localPath))
                 {
-                    logger.Log($"The versionControlServer is '{versionControlServer}'.");
+                    logger.Log($"The locale path is '{localPath}'.");
 
-                    var workspace = versionControlServer.GetWorkspace(localPath);
-                    logger.Log($"The workspace is '{workspace}'.");
-                    var serverPath = workspace.TryGetServerItemForLocalItem(localPath);
-                    logger.Log($"The serverPath is '{serverPath}'.");
+                    var tfs = new TfsWrapper();
+                    logger.Log($"The tfs is '{tfs}'.");
 
-                    var sourceControlExplorer = tfs.GetSourceControlExplorer();
-                    tfs.SelectInSourceControlExplorer(serverPath, workspace);
+                    var versionControlServer = tfs.GetVersionControlServer();
+                    if (versionControlServer != null)
+                    {
+                        logger.Log($"The versionControlServer is '{versionControlServer}'.");
+
+                        var workspace = versionControlServer.GetWorkspace(localPath);
+                        logger.Log($"The workspace is '{workspace.Name}'.");
+                        var serverPath = workspace.TryGetServerItemForLocalItem(localPath);
+                        logger.Log($"The serverPath is '{serverPath}'.");
+
+                        var sourceControlExplorer = tfs.GetSourceControlExplorer();
+                        tfs.SelectInSourceControlExplorer(serverPath, workspace);
+                    }
+                    else
+                    {
+                        logger.Log($"The file {localPath} is not under source control.");
+                    }
+
+                    logger.Log($"End of selecting '{selectedItem.Name}'.");
                 }
                 else
                 {
-                    logger.Log($"The file {localPath} is not under source control.");
+                    logger.Log($"There is no local path for the selected item '{selectedItem.Name}'.");
                 }
-
-                logger.Log($"End of selecting '{selectedItem.Name}'.");
             }
             else
             {
