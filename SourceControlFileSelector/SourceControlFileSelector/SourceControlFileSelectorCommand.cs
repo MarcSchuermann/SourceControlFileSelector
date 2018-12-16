@@ -2,6 +2,7 @@
 //// <copyright>Marc Schürmann</copyright>
 //// --------------------------------------------------------------------------------------------------------------------
 
+using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using SourceControlFileSelector.Misc;
 using SourceControlFileSelector.tfsAccess;
@@ -66,6 +67,8 @@ namespace SourceControlFileSelector
 
         private static EnvDTE.DTE dte { get; set; }
 
+        private static EnvDTE80.DTE2 dte2 { get; set; }
+
         /// <summary>Gets the service provider from the owner package.</summary>
         private IAsyncServiceProvider ServiceProvider
         {
@@ -90,6 +93,7 @@ namespace SourceControlFileSelector
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
             Instance = new SourceControlFileSelectorCommand(package, commandService);
             dte = await package.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            dte2 = await package.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
         }
 
         #endregion Public Methods
@@ -106,10 +110,9 @@ namespace SourceControlFileSelector
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-
-            var selectedItem = GetFirstItem(dte?.SelectedItems);
             var logger = new TraceLogger(dte);
 
+            var selectedItem = GetFirstSelectedItem(dte2?.ToolWindows.SolutionExplorer);
             if (selectedItem != null)
             {
                 logger.Log($"The selected item is '{selectedItem.Name}'.");
@@ -153,12 +156,12 @@ namespace SourceControlFileSelector
             }
         }
 
-        private EnvDTE.SelectedItem GetFirstItem(EnvDTE.SelectedItems selectedItems)
+        private EnvDTE.UIHierarchyItem GetFirstSelectedItem(EnvDTE.UIHierarchy hierarchy)
         {
-            if (selectedItems == null)
+            if (hierarchy == null)
                 return null;
 
-            foreach (EnvDTE.SelectedItem item in selectedItems)
+            foreach (EnvDTE.UIHierarchyItem item in (Array)hierarchy.SelectedItems)
             {
                 return item;
             }
@@ -166,34 +169,18 @@ namespace SourceControlFileSelector
             return null;
         }
 
-        private string GetLocalePath(EnvDTE.SelectedItem item)
+        private string GetLocalePath(UIHierarchyItem item)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string result = string.Empty;
 
-            if (item.ProjectItem == null)
+            var projectItem = item.Object as ProjectItem;
+
+            if (projectItem != null)
             {
-                if (item.Project == null)
-                {
-                    result = dte.Solution.FullName;
-                }
-                else
-                {
-                    result = item.Project.FullName;
-                }
+                return projectItem.Properties.Item("FullPath").Value.ToString();
             }
-            else
-            {
-                try
-                {
-                    result = item.ProjectItem.get_FileNames(0);
-                }
-                catch (ArgumentException)
-                {
-                    result = item.ProjectItem.get_FileNames(1);
-                }
-            }
-            return result;
+
+            return string.Empty;
         }
 
         #endregion Private Methods
