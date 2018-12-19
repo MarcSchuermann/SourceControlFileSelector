@@ -65,7 +65,7 @@ namespace SourceControlFileSelector
 
         #region Private Properties
 
-        private static EnvDTE.DTE dte { get; set; }
+        private static DTE dte { get; set; }
 
         private static EnvDTE80.DTE2 dte2 { get; set; }
 
@@ -92,8 +92,9 @@ namespace SourceControlFileSelector
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
             Instance = new SourceControlFileSelectorCommand(package, commandService);
-            dte = await package.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
-            dte2 = await package.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+
+            dte = await package.GetServiceAsync(typeof(DTE)) as DTE;
+            dte2 = await package.GetServiceAsync(typeof(DTE)) as EnvDTE80.DTE2;
         }
 
         #endregion Public Methods
