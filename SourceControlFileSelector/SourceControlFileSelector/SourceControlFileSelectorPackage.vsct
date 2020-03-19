@@ -17,7 +17,7 @@
         <Parent guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="icon" id="myIcon" />
         <Strings>
-          <ButtonText>Select file in Source Control Explorer</ButtonText>
+          <ButtonText>Open in Source Control Explorer</ButtonText>
         </Strings>
       </Button>
     </Buttons>
