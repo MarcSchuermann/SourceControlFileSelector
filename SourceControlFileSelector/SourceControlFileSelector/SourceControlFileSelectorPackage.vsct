@@ -28,7 +28,7 @@
   </Commands>
 
   <KeyBindings>
-    <KeyBinding guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" editor="guidVSStd97" mod1="Alt Shift" key1="y" />
+    <KeyBinding guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" editor="guidVSStd97" mod1="Ctrl Alt Shift" key1="y" />
   </KeyBindings>
 
   <CommandPlacements>
