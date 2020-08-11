@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SourceControlFileSelector.6a82be6a-c909-45b6-89d6-3d6a41e9f419" Version="1.18" Language="en-US" Publisher="Marc Schuermann" />
+        <Identity Id="SourceControlFileSelector.12ED57B9-62FA-408A-9638-062211BD3E02" Version="1.18" Language="en-US" Publisher="Marc Schuermann" />
         <DisplayName>Source Control file selector</DisplayName>
         <Description xml:space="preserve">A visual studio extension to locate the current file in the team foundation source control explorer by the shortcut "Ctrl" + "Alt" + "Shift" + "Y".</Description>
         <License>LICENSE.txt</License>
