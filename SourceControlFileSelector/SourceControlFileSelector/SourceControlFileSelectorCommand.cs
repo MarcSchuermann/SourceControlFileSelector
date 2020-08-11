@@ -113,75 +113,76 @@ namespace SourceControlFileSelector
             ThreadHelper.ThrowIfNotOnUIThread();
             var logger = new TraceLogger(dte);
 
-            var selectedItem = GetFirstSelectedItem(dte2?.ToolWindows.SolutionExplorer);
-            if (selectedItem != null)
+            if (dte2?.ActiveWindow != null && dte2?.ActiveWindow == dte2?.ActiveDocument?.ActiveWindow)
             {
-                logger.Log($"The selected item is '{selectedItem.Name}'.");
+              var activeDocumentLocalPath = dte2?.ActiveDocument?.FullName;
+              if (!string.IsNullOrWhiteSpace(activeDocumentLocalPath))
+              {
+                SelectLocalPath(activeDocumentLocalPath, logger, dte2.ActiveDocument.Name);
+                return;
+              }
+            }
 
-                var localPath = GetLocalePath(selectedItem);
-                if (!string.IsNullOrEmpty(localPath))
+            if (dte2?.SelectedItems?.Count > 0)
+            {
+                foreach (SelectedItem selectedItem in dte2.SelectedItems)
                 {
-                    logger.Log($"The locale path is '{localPath}'.");
-
-                    var tfs = new TfsWrapper();
-                    logger.Log($"The tfs is '{tfs}'.");
-
-                    var versionControlServer = tfs.GetVersionControlServer();
-                    if (versionControlServer != null)
+                    var localPath = GetLocalPath(selectedItem);
+                    if (!string.IsNullOrWhiteSpace(localPath))
                     {
-                        logger.Log($"The versionControlServer is '{versionControlServer}'.");
-
-                        var workspace = versionControlServer.GetWorkspace(localPath);
-                        logger.Log($"The workspace is '{workspace.Name}'.");
-                        var serverPath = workspace.TryGetServerItemForLocalItem(localPath);
-                        logger.Log($"The serverPath is '{serverPath}'.");
-
-                        var sourceControlExplorer = tfs.GetSourceControlExplorer();
-                        tfs.SelectInSourceControlExplorer(serverPath, workspace, sourceControlExplorer);
+                        logger.Log($"The selected item is '{selectedItem.Name}'.");
+                        SelectLocalPath(localPath, logger, selectedItem.Name);
+                        return;
                     }
-                    else
-                    {
-                        logger.Log($"The file {localPath} is not under source control.");
-                    }
+                }
+            }
 
-                    logger.Log($"End of selecting '{selectedItem.Name}'.");
-                }
-                else
-                {
-                    logger.Log($"There is no local path for the selected item '{selectedItem.Name}'.");
-                }
+            logger.Log($"No file with local path selected.");
+        }
+
+        private void SelectLocalPath(string localPath, TraceLogger logger, string name)
+        {
+            logger.Log($"The local path is '{localPath}'.");
+
+            var tfs = new TfsWrapper();
+            logger.Log($"The tfs is '{tfs}'.");
+
+            var versionControlServer = tfs.GetVersionControlServer();
+            if (versionControlServer != null)
+            {
+                logger.Log($"The versionControlServer is '{versionControlServer}'.");
+
+                var workspace = versionControlServer.GetWorkspace(localPath);
+                logger.Log($"The workspace is '{workspace.Name}'.");
+                var serverPath = workspace.TryGetServerItemForLocalItem(localPath);
+                logger.Log($"The serverPath is '{serverPath}'.");
+
+                var sourceControlExplorer = tfs.GetSourceControlExplorer();
+                tfs.SelectInSourceControlExplorer(serverPath, workspace, sourceControlExplorer);
             }
             else
             {
-                logger.Log($"No file selected.");
+                logger.Log($"The file {localPath} is not under source control.");
             }
+
+            logger.Log($"End of selecting '{name}'.");
         }
 
-        private EnvDTE.UIHierarchyItem GetFirstSelectedItem(EnvDTE.UIHierarchy hierarchy)
+        private string GetLocalPath(SelectedItem item)
         {
-            if (hierarchy == null)
-                return null;
-
-            foreach (EnvDTE.UIHierarchyItem item in (Array)hierarchy.SelectedItems)
+            if (item.ProjectItem != null)
             {
-                return item;
+                try
+                {
+                    return item.ProjectItem.get_FileNames(0);
+                }
+                catch(ArgumentException)
+                {
+                    return item.ProjectItem.get_FileNames(1);
+                }
             }
 
-            return null;
-        }
-
-        private string GetLocalePath(UIHierarchyItem item)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            var projectItem = item.Object as ProjectItem;
-
-            if (projectItem != null)
-            {
-                return projectItem.Properties.Item("FullPath").Value.ToString();
-            }
-
-            return string.Empty;
+            return item.Project?.FullName ?? dte2?.Solution?.FullName;
         }
 
         #endregion Private Methods

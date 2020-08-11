@@ -17,7 +17,7 @@
         <Parent guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="icon" id="myIcon" />
         <Strings>
-          <ButtonText>Select file in Source Control Explorer</ButtonText>
+          <ButtonText>Open in Source Control Explorer</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -28,24 +28,24 @@
   </Commands>
 
   <KeyBindings>
-    <KeyBinding guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" editor="guidVSStd97" mod1="Alt Shift" key1="y" />
+    <KeyBinding guid="guidSourceControlFileSelectorPackageCmdSet" id="SourceControlFileSelectorCommandId" editor="guidVSStd97" mod1="Ctrl Alt Shift" key1="y" />
   </KeyBindings>
 
   <CommandPlacements>
     <!--Add the command to an item-->
-    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0xFFFF">
+    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0x100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
     </CommandPlacement>
     <!--Add the command to a project-->
-    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0xFFFF">
+    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0x100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
     </CommandPlacement>
     <!--Add the command to a folder-->
-    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0xFFFF">
+    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0x100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE" />
     </CommandPlacement>
     <!--Add the command to the solution-->
-    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0xFFFF">
+    <CommandPlacement guid="guidSourceControlFileSelectorPackageCmdSet" id="MyMenuGroup" priority="0x100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
     </CommandPlacement>
   </CommandPlacements>
