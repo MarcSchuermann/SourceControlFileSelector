@@ -3,6 +3,7 @@
 //// --------------------------------------------------------------------------------------------------------------------
 
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using SourceControlFileSelector.Misc;
 using SourceControlFileSelector.tfsAccess;
@@ -65,9 +66,7 @@ namespace SourceControlFileSelector
 
         #region Private Properties
 
-        private static DTE dte { get; set; }
-
-        private static EnvDTE80.DTE2 dte2 { get; set; }
+        private static DTE2 dte2 { get; set; }
 
         /// <summary>Gets the service provider from the owner package.</summary>
         private IAsyncServiceProvider ServiceProvider
@@ -93,8 +92,7 @@ namespace SourceControlFileSelector
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
             Instance = new SourceControlFileSelectorCommand(package, commandService);
 
-            dte = await package.GetServiceAsync(typeof(DTE)) as DTE;
-            dte2 = await package.GetServiceAsync(typeof(DTE)) as EnvDTE80.DTE2;
+            dte2 = await package.GetServiceAsync(typeof(DTE)) as DTE2;
         }
 
         #endregion Public Methods
@@ -111,7 +109,7 @@ namespace SourceControlFileSelector
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var logger = new TraceLogger(dte);
+            var logger = new TraceLogger(dte2);
 
             if (dte2?.ActiveWindow != null && dte2?.ActiveWindow == dte2?.ActiveDocument?.ActiveWindow)
             {
