@@ -3,6 +3,7 @@
 //// --------------------------------------------------------------------------------------------------------------------
 
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using System;
 
@@ -13,7 +14,7 @@ namespace SourceControlFileSelector.Misc
     {
         #region Private Fields
 
-        private DTE dte;
+        private DTE2 dte2;
         private OutputWindowPane outputPane;
 
         #endregion Private Fields
@@ -22,9 +23,9 @@ namespace SourceControlFileSelector.Misc
 
         /// <summary>The trace logger.</summary>
         /// <param name="dte"></param>
-        public TraceLogger(DTE dte)
+        public TraceLogger(DTE2 dte2)
         {
-            this.dte = dte;
+            this.dte2 = dte2;
             outputPane = GetOutputPane();
 
             outputPane.Activate();
@@ -58,8 +59,7 @@ namespace SourceControlFileSelector.Misc
 
             if (outputPane == null)
             {
-                var window = dte.Windows.Item(Constants.vsWindowKindOutput);
-                var outputWindow = (OutputWindow)window.Object;
+                var outputWindow = dte2.ToolWindows.OutputWindow;
                 outputPane = outputWindow.OutputWindowPanes.Add("Source control file selector");
             }
 
